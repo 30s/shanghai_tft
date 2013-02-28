@@ -1,0 +1,56 @@
+1. 图片格式过滤
+   16（5-6-5）、8、1 位的图片
+   过滤 24 和 32 位真彩
+   ？ 16（5-5-5）是否需要
+   用 QImage 就可以符合要求了
+>>> img = QImage()
+>>> img.load("f:\\codingClient\\shangHaiTFT\\docs\\BMP32BIT\\03.bmp")
+3: True
+>>> img.depth
+4: <built-in method depth of QImage object at 0x012366C0>
+>>> img.depth()
+5: 32
+>>> img.format()
+6: 4
+   好像结果不太对
+
+2. 文件格式过滤
+   只要 bmp、bin 和 txt
+from PIL import Image
+import glob, os
+
+size = 128, 128
+
+for infile in glob.glob("*.jpg"):
+    file, ext = os.path.splitext(infile)
+    im = Image.open(infile)
+    im.thumbnail(size, Image.ANTIALIAS)
+    im.save(file + ".thumbnail", "JPEG")
+
+3. 创建固定大小的文件：不一定，只要小于存储器容量即可
+4. 扫描方式: 水平-从左向右，垂直-从上到下
+5. 中文路径问题要注意
+6. 请在Flash空间上再帮忙添加上128M、256M、512M、1G
+7. 565 的显示问题
+8. 线程结束后发送 signal
+9. 帮助按钮
+10. 看下 qtresource，加入图标
+11. 打包
+
+每个图片文件的生成数据保存。
+多线程下，模态对话框不模态
+
+1. 支持打开文件类型：
+   位图: 1 位、16 位( 5-6-6 )、24 位 和 32 位
+   Bin 文件：本程序生成的 Bin 文件
+2. 转换结果：
+   如果是 1 位位图，保存成 1 位图图片；
+   如果是其它位图，保存成 16 位图片（5-6-5）
+3. 支持操作：
+   图片列表文件编辑：添加、删除、上移、下移
+   位图文件预览
+   Bin 文件图片数据预览：打开 Bin 文件会读取其中的图片数据，
+       显示到图片文件列表中，点击即可生成预览
+   图片文件另存：支持 BMP 和 Bin 文件中图片数据另存到其他文件夹
+   生成：支持 BMP 和 Bin 文件生成新的 Bin 文件功能
+   
